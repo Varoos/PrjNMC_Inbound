@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="PrjNMC_Inbound.FocusService" CodeBehind="FocusService.svc.cs" %>

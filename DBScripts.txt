@@ -1,0 +1,31 @@
+﻿create FUNCTION dbo.GetProductSalesAc (@Productid int)
+RETURNS int
+AS
+BEGIN
+declare @Pid as int;
+DECLARE @returnValue as int;
+set @returnValue = 0;
+select @returnValue = iSalesAccount,@Pid = iParentId from vmCore_Product where iMasterId = @Productid and iStatus<>5;
+IF (@returnValue = 0 and @Pid != 0)
+BEGIN
+	return dbo.GetProductSalesAc(@Pid);
+END
+return @returnValue
+END
+
+----------------------------------------------------------------------------------------------------------------------
+
+create FUNCTION [dbo].[GetProductPurchaseAc] (@Productid int)
+RETURNS int
+AS
+BEGIN
+declare @Pid as int;
+DECLARE @returnValue as int;
+set @returnValue = 0;
+select @returnValue = iStocksAccount,@Pid = iParentId from vmCore_Product where iMasterId = @Productid and iStatus<>5;
+IF (@returnValue = 0 and @Pid != 0)
+BEGIN
+	return dbo.GetProductPurchaseAc(@Pid);
+END
+return @returnValue
+END
